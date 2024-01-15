@@ -1,0 +1,7 @@
+<div id="kanban-board-container" class="flex flex-nowrap justify-start gap-8">
+  <app-column-status-kanban
+    *ngFor="let status of kanbanStatus"
+    [kanbanStatus]="status"
+    [listOfTask]="listOfTask$ | async"
+  ></app-column-status-kanban>
+</div>
