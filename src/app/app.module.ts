@@ -8,6 +8,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { IState } from '@core/interfaces';
 import { rootReducersInjector } from '@core/reducers';
+import { LayoutCommonModule } from './layout-common/layout-common.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +24,7 @@ import { rootReducersInjector } from '@core/reducers';
     }),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    LayoutCommonModule,
   ],
   bootstrap: [AppComponent],
 })

@@ -1,0 +1,42 @@
+<div class="flex h-screen dark:bg-[#23232d]">
+  <button (click)="toggleLeftPanel()" class="p-2 bg-gray-800 text-white">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <!-- Panel Izquierdo -->
+  <div
+    class="w-1/4 bg-white text-black flex flex-col dark:bg-[#23232d] text-white"
+    *ngIf="showLeftPanel"
+    [@slideInAnimation]
+  >
+    <app-left-panel></app-left-panel>
+    <div
+      class="mt-auto flex justify-center items-center gap-4 mb-8 dark:bg-[#1e1e23] w-9/12 ml-16"
+    >
+      <mat-icon class="text-black dark:text-white">light_mode</mat-icon>
+      <mat-slide-toggle
+        color="primary"
+        class="p-2 text-white"
+        [checked]="darkMode()"
+        (change)="darkMode.set(!darkMode())"
+      >
+      </mat-slide-toggle>
+      <mat-icon class="text-black dark:text-white">dark_mode</mat-icon>
+    </div>
+  </div>
+
+  <!-- Área Principal -->
+  <div
+    [class.w-full]="!showLeftPanel"
+    class="w-3/4 bg-white text-black dark:bg-[#1e1e23] text-white"
+  >
+    <h1
+      class="text-2xl h-20 p-3 bg-white text-black font-semibold mb-4 dark:bg-[#23232d] dark:text-white"
+    >
+      Platform Launch
+    </h1>
+    <!-- Contenido de la Aplicación -->
+    <div class="p-3">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
