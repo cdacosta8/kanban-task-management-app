@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
-import { updateTask } from '@core/actions/task.actions';
+import { moveTask, setAllTask } from '@core/actions/task.actions';
 import { KanbanStatusList } from '@core/enumerations';
-import { IkanbanTask } from '@core/interfaces';
-import { getListOfTask, getListOfTaskCalculated } from '@core/selectors';
+import { IMoveTask, IkanbanTask } from '@core/interfaces';
+import {
+  getListOfTask,
+  getListOfTaskMap,
+  getTasksWithSubtasksCount,
+} from '@core/selectors';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -14,16 +18,12 @@ import { Observable } from 'rxjs';
 export class KanbanBoardComponent {
   public kanbanStatus = Object.values(KanbanStatusList);
 
-  public listOfTask$: Observable<IkanbanTask[] | null> = this._store.pipe(
-    select(getListOfTaskCalculated)
-  );
+  public listOfTask$: Observable<Map<KanbanStatusList, IkanbanTask[]>> =
+    this._store.pipe(select(getTasksWithSubtasksCount));
 
   constructor(private readonly _store: Store) {}
 
-  public outUpdateTask(event: {
-    idTask: number;
-    newKanbanStatus: KanbanStatusList;
-  }) {
-    this._store.dispatch(updateTask(event.idTask, event.newKanbanStatus));
+  public outMoveTask(event: IMoveTask) {
+    this._store.dispatch(moveTask(event));
   }
 }

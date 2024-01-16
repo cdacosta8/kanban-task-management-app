@@ -7,6 +7,6 @@
     *ngFor="let status of kanbanStatus"
     [kanbanStatus]="status"
     [listOfTask]="listOfTask$ | async"
-    (updateTask)="outUpdateTask($event)"
+    (moveTask)="outMoveTask($event)"
   ></app-column-status-kanban>
 </div>

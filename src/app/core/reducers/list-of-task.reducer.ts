@@ -1,6 +1,6 @@
-import { setAllTask, updateTask } from '@core/actions/task.actions';
+import { setAllTask } from '@core/actions/task.actions';
 import { ITaskState } from '@core/interfaces';
-import { initialKanbanTask } from '@core/mocks/initialKanbanTask';
+import initialKanbanTask from '@core/mocks/initialKanbanTask';
 import { createReducer, on } from '@ngrx/store';
 
 const initialState: ITaskState = {

@@ -5,7 +5,7 @@ import {
 } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { KanbanStatusList } from '@core/enumerations';
-import { IkanbanTask } from '@core/interfaces';
+import { IMoveTask, IkanbanTask } from '@core/interfaces';
 
 @Component({
   selector: 'app-column-status-kanban',
@@ -15,26 +15,27 @@ import { IkanbanTask } from '@core/interfaces';
 export class ColumnStatusKanbanComponent {
   public filterTask: IkanbanTask[] = [];
 
+  @Output() public moveTask = new EventEmitter<IMoveTask>();
+
   @Input() public kanbanStatus: KanbanStatusList | null = null;
 
-  @Input() public set listOfTask(listOfTask: IkanbanTask[] | null) {
+  @Input() public set listOfTask(
+    listOfTask: Map<KanbanStatusList, IkanbanTask[]> | null
+  ) {
     if (listOfTask && this.kanbanStatus) {
-      this.filterTask = listOfTask.filter(
-        (task) => task.status === this.kanbanStatus
-      );
+      this.filterTask = [
+        ...(listOfTask.get(this.kanbanStatus) as IkanbanTask[]),
+      ];
     }
   }
-
-  @Output() public updateTask = new EventEmitter<{
-    idTask: number;
-    newKanbanStatus: KanbanStatusList;
-  }>();
 
   public drop(
     event: CdkDragDrop<IkanbanTask[]>,
     kanbanStatus: KanbanStatusList | null
   ) {
-    if (event.previousContainer === event.container) {
+    const isTheSameColumn = event.previousContainer === event.container;
+
+    if (isTheSameColumn) {
       moveItemInArray(
         event.container.data,
         event.previousIndex,
@@ -49,11 +50,19 @@ export class ColumnStatusKanbanComponent {
       );
     }
 
-    const { id } = this.filterTask[event.currentIndex];
+    const taskToMove = { ...event.container.data[event.currentIndex] };
 
-    this.updateTask.emit({
-      idTask: id,
+    const filterTaskUpdate = event.container.data.map((task, index) =>
+      index === event.currentIndex
+        ? { ...task, status: kanbanStatus as KanbanStatusList }
+        : task
+    );
+
+    this.moveTask.emit({
+      taskToMove,
+      newListOftask: filterTaskUpdate,
       newKanbanStatus: kanbanStatus as KanbanStatusList,
+      isTheSameColumn,
     });
   }
 }
