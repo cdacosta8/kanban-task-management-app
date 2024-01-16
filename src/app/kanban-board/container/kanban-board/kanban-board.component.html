@@ -1,7 +1,12 @@
-<div id="kanban-board-container" class="flex flex-nowrap justify-start gap-8">
+<div
+  id="kanban-board-container"
+  class="flex flex-nowrap justify-start gap-8"
+  cdkDropListGroup
+>
   <app-column-status-kanban
     *ngFor="let status of kanbanStatus"
     [kanbanStatus]="status"
     [listOfTask]="listOfTask$ | async"
+    (updateTask)="outUpdateTask($event)"
   ></app-column-status-kanban>
 </div>

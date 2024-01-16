@@ -9,6 +9,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { IState } from '@core/interfaces';
 import { rootReducersInjector } from '@core/reducers';
 import { LayoutCommonModule } from './layout-common/layout-common.module';
+import { TaskEffects } from '@core/effects/task.effect';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +23,7 @@ import { LayoutCommonModule } from './layout-common/layout-common.module';
         strictActionImmutability: true,
       },
     }),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([TaskEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     LayoutCommonModule,
   ],

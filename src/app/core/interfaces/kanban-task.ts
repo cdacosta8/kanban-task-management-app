@@ -6,5 +6,6 @@ export interface IkanbanTask {
   status: KanbanStatusList;
   title: string;
   description: string;
+  subtasksTrueCount?: number;
   subtask: ISubTask[];
 }
