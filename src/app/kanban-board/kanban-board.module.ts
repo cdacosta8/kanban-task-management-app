@@ -5,12 +5,21 @@ import { KanbanTaskComponent } from './components/kanban-task/kanban-task.compon
 import { KanbanBoardComponent } from './container/kanban-board/kanban-board.component';
 import { KanbanBoardRoutingModule } from './kanban-board-routing.module';
 import { CdkDrag, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
-
+import { AddTaskDialogComponent } from './components/add-task-dialog/add-task-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
 @NgModule({
   declarations: [
     KanbanBoardComponent,
     ColumnStatusKanbanComponent,
     KanbanTaskComponent,
+    AddTaskDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -18,6 +27,14 @@ import { CdkDrag, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
     CdkDropListGroup,
     CdkDropList,
     CdkDrag,
+    MatDialogModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatDividerModule,
+    MatIconModule,
   ],
 })
 export class KanbanBoardModule {}

@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import {
+  addTask,
+  addTaskSuccess,
   initializeTask,
   moveTask,
-  moveTaskkSuccess,
-  setAllTask,
-  setAllTaskSuccess,
+  moveTaskSuccess,
+  openAddTaskDialog,
+  openAddTaskDialogSuccess,
+  setTask,
+  setTaskSuccess,
 } from '@core/actions/task.actions';
 import { KanbanStatusList } from '@core/enumerations';
 import { IMoveTask, IkanbanTask } from '@core/interfaces';
@@ -19,7 +24,8 @@ import {
   ofType,
 } from '@ngrx/effects';
 import { Action, Store, select } from '@ngrx/store';
-import { map, mergeMap } from 'rxjs';
+import { map, mergeMap, of } from 'rxjs';
+import { AddTaskDialogComponent } from 'src/app/kanban-board/components/add-task-dialog/add-task-dialog.component';
 
 @Injectable()
 export class TaskEffects implements OnInitEffects {
@@ -31,17 +37,17 @@ export class TaskEffects implements OnInitEffects {
           window.localStorage.getItem('listOfTask') ??
             JSON.stringify(initialKanbanTask)
         );
-        return setAllTask(listOfTask);
+        return setTask(listOfTask);
       })
     );
   });
 
   public setAllTask$ = createEffect(() => {
     return this._actions$.pipe(
-      ofType(setAllTask),
+      ofType(setTask),
       map(({ listOfTask }) => {
         window.localStorage.setItem('listOfTask', JSON.stringify(listOfTask));
-        return setAllTaskSuccess();
+        return setTaskSuccess();
       })
     );
   });
@@ -57,14 +63,55 @@ export class TaskEffects implements OnInitEffects {
         );
         const arrayFromMap = Array.from(updatedList);
 
-        return [moveTaskkSuccess(), setAllTask(arrayFromMap)];
+        return [moveTaskSuccess(), setTask(arrayFromMap)];
+      })
+    );
+  });
+
+  public openAddTaskDialog$ = createEffect(() =>
+    this._actions$.pipe(
+      ofType(openAddTaskDialog),
+      mergeMap(() => {
+        let addEditCommentsDialog$ = of(null);
+        addEditCommentsDialog$ = this._openAddTaskDialog();
+
+        return addEditCommentsDialog$.pipe(
+          mergeMap((dialogResult) => {
+            const responseActions = [openAddTaskDialogSuccess()];
+            if (dialogResult) {
+              const { task } = dialogResult;
+              return [...responseActions, addTask(task)];
+            }
+
+            return responseActions;
+          })
+        );
+      })
+    )
+  );
+
+  public addTask$ = createEffect(() => {
+    return this._actions$.pipe(
+      ofType(addTask),
+      concatLatestFrom(() => this._store.pipe(select(getListOfTaskMap))),
+      mergeMap(([{ newTask }, listOfTaskFromState]) => {
+        const tasksArrayMap = new Map(listOfTaskFromState);
+        if (tasksArrayMap.has(newTask.status)) {
+          const statusTasks = [...(tasksArrayMap.get(newTask.status) ?? [])];
+          statusTasks?.push(newTask);
+          tasksArrayMap.set(newTask.status, statusTasks as IkanbanTask[]);
+        }
+        const arrayFromMap = Array.from(tasksArrayMap);
+
+        return [addTaskSuccess(), setTask(arrayFromMap)];
       })
     );
   });
 
   constructor(
     private readonly _actions$: Actions,
-    private readonly _store: Store
+    private readonly _store: Store,
+    private readonly _dialogService: MatDialog
   ) {}
 
   public ngrxOnInitEffects(): Action {
@@ -87,5 +134,11 @@ export class TaskEffects implements OnInitEffects {
       actionData.newListOftask
     );
     return listOfTaskFromState;
+  }
+
+  private _openAddTaskDialog() {
+    const confirmationRef = this._dialogService.open(AddTaskDialogComponent);
+
+    return confirmationRef.afterClosed();
   }
 }

@@ -4,14 +4,14 @@ import { createAction } from '@ngrx/store';
 
 export const initializeTask = createAction('[task] Initialize Task');
 
-export const setAllTask = createAction(
-  '[task] Set All Task',
+export const setTask = createAction(
+  '[task] Set Task',
   (listOfTask: Array<[KanbanStatusList, IkanbanTask[]]>) => ({
     listOfTask,
   })
 );
 
-export const setAllTaskSuccess = createAction('[task] Set All Task Success');
+export const setTaskSuccess = createAction('[task] Set Task Success');
 
 export const moveTask = createAction(
   '[task] Move Task',
@@ -20,4 +20,21 @@ export const moveTask = createAction(
   })
 );
 
-export const moveTaskkSuccess = createAction('[task] Move Task Success');
+export const moveTaskSuccess = createAction('[task] Move Task Success');
+
+export const openAddTaskDialog = createAction(
+  '[Finalize] Open Add Task Dialog'
+);
+
+export const openAddTaskDialogSuccess = createAction(
+  '[Finalize] Open Add Task Dialog success'
+);
+
+export const addTask = createAction(
+  '[task] Add Task',
+  (newTask: IkanbanTask) => ({
+    newTask,
+  })
+);
+
+export const addTaskSuccess = createAction('[task] Add Task Success');

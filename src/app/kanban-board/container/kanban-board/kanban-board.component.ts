@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
-import { moveTask, setAllTask } from '@core/actions/task.actions';
+import { moveTask } from '@core/actions/task.actions';
 import { KanbanStatusList } from '@core/enumerations';
 import { IMoveTask, IkanbanTask } from '@core/interfaces';
-import {
-  getListOfTask,
-  getListOfTaskMap,
-  getTasksWithSubtasksCount,
-} from '@core/selectors';
+import { getTasksWithSubtasksCount } from '@core/selectors';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 

@@ -1,6 +1,5 @@
-import { Component, HostBinding, OnInit, effect, signal } from '@angular/core';
+import { Component, HostBinding, effect, signal } from '@angular/core';
 import { slideInAnimation } from '../../animation';
-
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',

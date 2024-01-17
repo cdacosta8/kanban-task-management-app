@@ -1,0 +1,70 @@
+<div class="flex flex-col items-center" [formGroup]="form">
+  <h2 mat-dialog-title>Add New Task</h2>
+  <mat-dialog-content class="mat-typography flex flex-col flex-nowrap">
+    <mat-form-field class="w-full">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" />
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+
+    <!-- Campos dinámicos para subtasks -->
+    <ng-container formArrayName="subtask">
+      <ng-container
+        *ngFor="let adminForm of subtasks.controls; let index = index"
+      >
+        <div [formGroupName]="index" class="flex items-baseline">
+          <mat-form-field class="w-full">
+            <mat-label>Subtask {{ index + 1 }}:</mat-label>
+            <input
+              matInput
+              type="text"
+              [id]="'subtask' + index"
+              formControlName="title"
+            />
+          </mat-form-field>
+          <button
+            mat-icon-button
+            color="primary"
+            (click)="removeSubtask(index)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </ng-container>
+    </ng-container>
+    <div class="flex justify-around mb-8">
+      <button
+        mat-stroked-button
+        color="primary"
+        class="w-80"
+        (click)="addNewTask()"
+      >
+        + Add New Subrask
+      </button>
+    </div>
+
+    <mat-form-field class="w-full">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option *ngFor="let status of kanbanStatus" [value]="status">{{
+          status
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="center" class="w-full">
+    <button
+      mat-raised-button
+      color="primary"
+      class="w-80"
+      (click)="onConfirm()"
+      [disabled]="!form.valid"
+    >
+      Create Task
+    </button>
+  </mat-dialog-actions>
+</div>
