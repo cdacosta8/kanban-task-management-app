@@ -1,10 +1,17 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { IkanbanTask } from '@core/interfaces';
 
 @Component({
   selector: 'app-kanban-task',
   templateUrl: './kanban-task.component.html',
   styleUrl: './kanban-task.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KanbanTaskComponent {
   @Input() public kanbanTask: IkanbanTask | null = null;

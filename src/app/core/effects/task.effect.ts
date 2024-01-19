@@ -150,6 +150,7 @@ export class TaskEffects implements OnInitEffects {
 
         if (previusTask) {
           this._handleStatusChange(listOfTask, previusTask, taskToEdit);
+          console.log([...Array.from(listOfTask)]);
           this._updateTaskList(listOfTask, taskToEdit);
         }
 
@@ -188,14 +189,21 @@ export class TaskEffects implements OnInitEffects {
 
   private _handleStatusChange(
     listOfTask: Map<KanbanStatusList, IkanbanTask[]>,
-    previusTask: IkanbanTask,
+    previousTask: IkanbanTask,
     taskToEdit: IkanbanTask
   ): void {
-    if (previusTask.status !== taskToEdit.status) {
-      const { status, id } = previusTask;
-      const tasksArray = listOfTask.get(status) ?? [];
-      const updatedTasksArray = tasksArray.filter((task) => task.id !== id);
-      listOfTask.set(status, updatedTasksArray);
+    const { status: prevStatus, id } = previousTask;
+    const { status: newStatus } = taskToEdit;
+
+    if (prevStatus !== newStatus) {
+      const removeFromStatus = listOfTask.get(prevStatus) || [];
+      const updatedTasksArray = removeFromStatus.filter(
+        (task) => task.id !== id
+      );
+      listOfTask.set(prevStatus, updatedTasksArray);
+
+      const addToStatus = listOfTask.get(newStatus) || [];
+      listOfTask.set(newStatus, [...addToStatus, taskToEdit]);
     }
   }
 
@@ -203,10 +211,14 @@ export class TaskEffects implements OnInitEffects {
     listOfTask: Map<KanbanStatusList, IkanbanTask[]>,
     taskToEdit: IkanbanTask
   ): void {
-    if (listOfTask.has(taskToEdit.status)) {
-      const statusTasks = [...(listOfTask.get(taskToEdit.status) || [])];
-      statusTasks.push(taskToEdit);
-      listOfTask.set(taskToEdit.status, statusTasks);
+    const statusTasks = listOfTask.get(taskToEdit.status);
+
+    if (statusTasks) {
+      const updatedTasks = statusTasks.map((task) =>
+        task.id === taskToEdit.id ? { ...taskToEdit } : task
+      );
+
+      listOfTask.set(taskToEdit.status, updatedTasks);
     }
   }
 
