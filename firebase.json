@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/kanban-task-management-app/browser",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
