@@ -14,12 +14,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
+import { EditTaskDialogComponent } from './components/edit-task-dialog/edit-task-dialog.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { StrikeThroughDirective } from '../shared/directives/strike-through.directive';
 @NgModule({
   declarations: [
     KanbanBoardComponent,
     ColumnStatusKanbanComponent,
     KanbanTaskComponent,
     AddTaskDialogComponent,
+    EditTaskDialogComponent,
+    StrikeThroughDirective,
   ],
   imports: [
     CommonModule,
@@ -35,6 +40,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatSelectModule,
     MatDividerModule,
     MatIconModule,
+    MatCheckboxModule,
   ],
 })
 export class KanbanBoardModule {}

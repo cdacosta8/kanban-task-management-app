@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { moveTask } from '@core/actions/task.actions';
+import { moveTask, openEditTaskDialog } from '@core/actions/task.actions';
 import { KanbanStatusList } from '@core/enumerations';
 import { IMoveTask, IkanbanTask } from '@core/interfaces';
 import { getTasksWithSubtasksCount } from '@core/selectors';
@@ -19,7 +19,11 @@ export class KanbanBoardComponent {
 
   constructor(private readonly _store: Store) {}
 
-  public outMoveTask(event: IMoveTask) {
-    this._store.dispatch(moveTask(event));
+  public outMoveTask(kanbanTask: IMoveTask) {
+    this._store.dispatch(moveTask(kanbanTask));
+  }
+
+  editTaskClicked(kanbanTask: IkanbanTask | null) {
+    this._store.dispatch(openEditTaskDialog(kanbanTask));
   }
 }

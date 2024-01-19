@@ -25,13 +25,12 @@ export class AddTaskDialogComponent {
     id: new FormControl(Date.now()),
     title: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
-    subtask: this.formBuilder.array([this.subTaskForm]),
+    subtask: this._fb.array([this.subTaskForm]),
     status: new FormControl('', [Validators.required]),
   });
 
   constructor(
     private _dialogRef: MatDialogRef<AddTaskDialogComponent>,
-    private formBuilder: FormBuilder,
     private _fb: FormBuilder
   ) {}
 

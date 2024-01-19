@@ -17,6 +17,8 @@ export class ColumnStatusKanbanComponent {
 
   @Output() public moveTask = new EventEmitter<IMoveTask>();
 
+  @Output() public editTask = new EventEmitter<IkanbanTask | null>();
+
   @Input() public kanbanStatus: KanbanStatusList | null = null;
 
   @Input() public set listOfTask(
@@ -64,5 +66,9 @@ export class ColumnStatusKanbanComponent {
       newKanbanStatus: kanbanStatus as KanbanStatusList,
       isTheSameColumn,
     });
+  }
+
+  editTaskClicked(kanbanTask: IkanbanTask | null) {
+    this.editTask.emit(kanbanTask);
   }
 }

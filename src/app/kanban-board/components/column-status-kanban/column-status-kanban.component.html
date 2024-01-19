@@ -15,6 +15,7 @@
       cdkDrag
       *ngFor="let task of filterTask"
       [kanbanTask]="task"
+      (editTask)="editTaskClicked($event)"
     ></app-kanban-task>
   </div>
 </div>

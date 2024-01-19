@@ -38,3 +38,23 @@ export const addTask = createAction(
 );
 
 export const addTaskSuccess = createAction('[task] Add Task Success');
+
+export const openEditTaskDialog = createAction(
+  '[Finalize] Open Edit Task Dialog',
+  (taskToEdit: IkanbanTask | null) => ({
+    taskToEdit,
+  })
+);
+
+export const openEditTaskDialogSuccess = createAction(
+  '[Finalize] Open Edit Task Dialog success'
+);
+
+export const editTask = createAction(
+  '[task] Edit Task',
+  (taskToEdit: IkanbanTask) => ({
+    taskToEdit,
+  })
+);
+
+export const editTaskSuccess = createAction('[task] Edit Task Success');

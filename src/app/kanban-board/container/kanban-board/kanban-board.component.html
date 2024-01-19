@@ -8,5 +8,6 @@
     [kanbanStatus]="status"
     [listOfTask]="listOfTask$ | async"
     (moveTask)="outMoveTask($event)"
+    (editTask)="editTaskClicked($event)"
   ></app-column-status-kanban>
 </div>

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IkanbanTask } from '@core/interfaces';
 
 @Component({
@@ -8,4 +8,10 @@ import { IkanbanTask } from '@core/interfaces';
 })
 export class KanbanTaskComponent {
   @Input() public kanbanTask: IkanbanTask | null = null;
+
+  @Output() public editTask = new EventEmitter<IkanbanTask | null>();
+
+  editTaskClicked(kanbanTask: IkanbanTask | null) {
+    this.editTask.emit(kanbanTask);
+  }
 }
