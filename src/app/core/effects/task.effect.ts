@@ -15,6 +15,7 @@ import {
   setTaskSuccess,
 } from '@core/actions/task.actions';
 import { KanbanStatusList } from '@core/enumerations';
+import { findByIdInMap } from '@core/helpers';
 import { IMoveTask, IkanbanTask } from '@core/interfaces';
 import initialKanbanTask from '@core/mocks/initialKanbanTask';
 
@@ -146,7 +147,7 @@ export class TaskEffects implements OnInitEffects {
       concatLatestFrom(() => this._store.pipe(select(getListOfTaskMap))),
       mergeMap(([{ taskToEdit }, listOfTaskFromState]) => {
         const listOfTask = new Map(listOfTaskFromState);
-        const previusTask = this._findByIdInMap(listOfTask, taskToEdit.id);
+        const previusTask = findByIdInMap(listOfTask, taskToEdit.id);
 
         if (previusTask) {
           this._handleStatusChange(listOfTask, previusTask, taskToEdit);
@@ -170,21 +171,18 @@ export class TaskEffects implements OnInitEffects {
     return initializeTask();
   }
 
-  private _findByIdInMap(
-    map: Map<KanbanStatusList, IkanbanTask[]>,
-    id: number
-  ): IkanbanTask | null {
-    let encontrado: IkanbanTask | null = null;
+  private _openAddTaskDialog() {
+    const confirmationRef = this._dialogService.open(AddTaskDialogComponent);
 
-    map.forEach((tasksArray) => {
-      const tareaEncontrada = tasksArray.find((tarea) => tarea.id === id);
+    return confirmationRef.afterClosed();
+  }
 
-      if (tareaEncontrada) {
-        encontrado = tareaEncontrada;
-      }
+  private _openEditTaskDialog(taskToEdit: IkanbanTask) {
+    const confirmationRef = this._dialogService.open(EditTaskDialogComponent, {
+      data: { taskToEdit },
     });
 
-    return encontrado;
+    return confirmationRef.afterClosed();
   }
 
   private _handleStatusChange(
@@ -238,19 +236,5 @@ export class TaskEffects implements OnInitEffects {
       actionData.newListOftask
     );
     return listOfTaskFromState;
-  }
-
-  private _openAddTaskDialog() {
-    const confirmationRef = this._dialogService.open(AddTaskDialogComponent);
-
-    return confirmationRef.afterClosed();
-  }
-
-  private _openEditTaskDialog(taskToEdit: IkanbanTask) {
-    const confirmationRef = this._dialogService.open(EditTaskDialogComponent, {
-      data: { taskToEdit },
-    });
-
-    return confirmationRef.afterClosed();
   }
 }
