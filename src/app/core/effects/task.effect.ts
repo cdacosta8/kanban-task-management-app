@@ -20,6 +20,7 @@ import { IMoveTask, IkanbanTask } from '@core/interfaces';
 import initialKanbanTask from '@core/mocks/initialKanbanTask';
 
 import { getListOfTaskMap } from '@core/selectors';
+import { LocalStorageService } from '@core/services';
 import {
   Actions,
   OnInitEffects,
@@ -39,7 +40,7 @@ export class TaskEffects implements OnInitEffects {
       ofType(initializeTask),
       map(() => {
         const listOfTask = JSON.parse(
-          window.localStorage.getItem('listOfTask') ??
+          this._localStorageService.getItem('listOfTask') ??
             JSON.stringify(initialKanbanTask)
         );
         return setTask(listOfTask);
@@ -51,7 +52,10 @@ export class TaskEffects implements OnInitEffects {
     return this._actions$.pipe(
       ofType(setTask),
       map(({ listOfTask }) => {
-        window.localStorage.setItem('listOfTask', JSON.stringify(listOfTask));
+        this._localStorageService.setItem(
+          'listOfTask',
+          JSON.stringify(listOfTask)
+        );
         return setTaskSuccess();
       })
     );
@@ -164,7 +168,8 @@ export class TaskEffects implements OnInitEffects {
   constructor(
     private readonly _actions$: Actions,
     private readonly _store: Store,
-    private readonly _dialogService: MatDialog
+    private readonly _dialogService: MatDialog,
+    private readonly _localStorageService: LocalStorageService
   ) {}
 
   public ngrxOnInitEffects(): Action {
