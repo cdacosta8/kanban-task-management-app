@@ -6,7 +6,11 @@
   (cdkDropListDropped)="drop($event, kanbanStatus)"
 >
   <div id="status" class="flex gap-4 items-center">
-    <span id="point" class="w-4 h-4 bg-emerald-300 rounded-full"></span>
+    <span
+      id="point"
+      class="w-4 h-4 rounded-full"
+      [appColorStatusTask]="kanbanStatus"
+    ></span>
     <span id="status-name">{{ kanbanStatus }}</span>
   </div>
   <div id="list-of-task" class="flex flex-col gap-5 mt-5">

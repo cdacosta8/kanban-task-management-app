@@ -16,7 +16,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { EditTaskDialogComponent } from './components/edit-task-dialog/edit-task-dialog.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { StrikeThroughDirective } from '../shared/directives/strike-through.directive';
+import { SharedModule } from '../shared/shared.module';
+
 @NgModule({
   declarations: [
     KanbanBoardComponent,
@@ -24,7 +25,6 @@ import { StrikeThroughDirective } from '../shared/directives/strike-through.dire
     KanbanTaskComponent,
     AddTaskDialogComponent,
     EditTaskDialogComponent,
-    StrikeThroughDirective,
   ],
   imports: [
     CommonModule,
@@ -41,6 +41,7 @@ import { StrikeThroughDirective } from '../shared/directives/strike-through.dire
     MatDividerModule,
     MatIconModule,
     MatCheckboxModule,
+    SharedModule,
   ],
 })
 export class KanbanBoardModule {}
