@@ -1,5 +1,5 @@
 import { KanbanStatusList } from '@core/enumerations';
-import { ISubTask, IkanbanTask } from '@core/interfaces';
+import { IkanbanTask } from '@core/interfaces';
 
 // Mock de datos para listOfTask
 const initialKanbanTask: Array<[KanbanStatusList, IkanbanTask[]]> = [
@@ -26,7 +26,6 @@ const initialKanbanTask: Array<[KanbanStatusList, IkanbanTask[]]> = [
           { status: false, title: 'Subtarea 2' },
         ],
       },
-      // Puedes agregar más tareas según sea necesario
     ],
   ],
   [
@@ -35,8 +34,8 @@ const initialKanbanTask: Array<[KanbanStatusList, IkanbanTask[]]> = [
       {
         id: 3,
         status: KanbanStatusList.DOING,
-        title: 'Tarea doing 1',
-        description: 'Descripción de la tarea 1',
+        title: 'Tarea 3',
+        description: 'Descripción de la tarea 3',
         subtask: [
           { status: true, title: 'Subtarea 1' },
           { status: false, title: 'Subtarea 2' },
@@ -45,14 +44,13 @@ const initialKanbanTask: Array<[KanbanStatusList, IkanbanTask[]]> = [
       {
         id: 4,
         status: KanbanStatusList.DOING,
-        title: 'Tarea doing 2',
-        description: 'Descripción de la tarea 2',
+        title: 'Tarea 4',
+        description: 'Descripción de la tarea 4',
         subtask: [
           { status: true, title: 'Subtarea 1' },
           { status: false, title: 'Subtarea 2' },
         ],
       },
-      // Puedes agregar más tareas según sea necesario
     ],
   ],
   [
@@ -61,8 +59,8 @@ const initialKanbanTask: Array<[KanbanStatusList, IkanbanTask[]]> = [
       {
         id: 5,
         status: KanbanStatusList.DONE,
-        title: 'Tarea DONE 1',
-        description: 'Descripción de la tarea 1',
+        title: 'Tarea 5',
+        description: 'Descripción de la tarea 5',
         subtask: [
           { status: true, title: 'Subtarea 1' },
           { status: true, title: 'Subtarea 2' },
@@ -71,17 +69,28 @@ const initialKanbanTask: Array<[KanbanStatusList, IkanbanTask[]]> = [
       {
         id: 6,
         status: KanbanStatusList.DONE,
-        title: 'Tarea DONE 2',
-        description: 'Descripción de la tarea 2',
+        title: 'Tarea 6',
+        description: 'Descripción de la tarea 6',
         subtask: [
           { status: true, title: 'Subtarea 1' },
           { status: true, title: 'Subtarea 2' },
+          { status: true, title: 'Subtarea 3' },
+          { status: true, title: 'Subtarea 4' },
         ],
       },
-      // Puedes agregar más tareas según sea necesario
+      {
+        id: 7,
+        status: KanbanStatusList.DONE,
+        title: 'Tarea 7',
+        description: 'Descripción de la tarea 7',
+        subtask: [
+          { status: true, title: 'Subtarea 1' },
+          { status: true, title: 'Subtarea 2' },
+          { status: true, title: 'Subtarea 3' },
+        ],
+      },
     ],
   ],
-  // Puedes agregar más registros según sea necesario
 ];
 
 const kanbanTaskMap = new Map<KanbanStatusList, IkanbanTask[]>();

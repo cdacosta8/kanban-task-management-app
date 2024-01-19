@@ -11,7 +11,9 @@
       class="w-4 h-4 rounded-full"
       [appColorStatusTask]="kanbanStatus"
     ></span>
-    <span id="status-name">{{ kanbanStatus }}</span>
+    <span id="status-name" class="text-black dark:text-white">{{
+      kanbanStatus
+    }}</span>
   </div>
   <div id="list-of-task" class="flex flex-col gap-5 mt-5">
     <app-kanban-task
