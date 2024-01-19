@@ -155,7 +155,6 @@ export class TaskEffects implements OnInitEffects {
 
         if (previusTask) {
           this._handleStatusChange(listOfTask, previusTask, taskToEdit);
-          console.log([...Array.from(listOfTask)]);
           this._updateTaskList(listOfTask, taskToEdit);
         }
 

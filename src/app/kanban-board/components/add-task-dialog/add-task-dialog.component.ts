@@ -36,7 +36,6 @@ export class AddTaskDialogComponent {
 
   public onConfirm(): void {
     if (this.form.valid) {
-      console.log(this.form.value);
       const task = this.form.value;
       this._dialogRef.close({ task });
     }
